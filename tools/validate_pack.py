@@ -14,7 +14,8 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / 'specs/pre2_reading.json'
-GAP = re.compile(r'\{\{q(\d+)\}\}')
+GAP = re.compile(r'\{\{q([1-9][0-9]*)\}\}')
+MAX_JSON_BYTES = 8 * 1024 * 1024
 FACT_MODES = {'verified_canon', 'verified_nonfiction', 'fictional_context', 'original_fiction'}
 
 
@@ -38,7 +39,12 @@ def _reject_constant(value: str) -> None:
 
 
 def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=_unique_object,
+    # Bound the actual read, not only stat(), so oversized/changing files stay bounded.
+    with path.open('rb') as source:
+        raw = source.read(MAX_JSON_BYTES + 1)
+    if len(raw) > MAX_JSON_BYTES:
+        raise ValueError('JSON file exceeds the 8 MiB input limit')
+    return json.loads(raw.decode('utf-8'), object_pairs_hook=_unique_object,
                       parse_constant=_reject_constant)
 
 
@@ -72,6 +78,11 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
             check(bool(value.strip()), where, 'must not be empty')
         return value
 
+    def literal_text(value: Any, where: str) -> str:
+        value = text(value, where)
+        check('{{' not in value and '}}' not in value, where, 'unexpected marker outside an English gap segment')
+        return value
+
     def strings(value: Any, where: str, nonempty: bool = False) -> list[str]:
         values = array(value, where)
         valid = [text(v, f'{where}[{i}]') for i, v in enumerate(values)]
@@ -90,7 +101,7 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
     check(not (set(data) - allowed), 'pack', 'unknown root field (do not store a separate answer_key)')
     for name in ('schema_version', 'grade', 'profile'):
         check(data.get(name) == spec[name], name, f'must be {spec[name]}')
-    text(data.get('theme'), 'theme')
+    literal_text(data.get('theme'), 'theme')
     mode = data.get('scope')
     check(mode in ('full', 'parts'), 'scope', 'must be full or parts')
     part_specs = {p['id']: p for p in spec['parts']}
@@ -134,15 +145,15 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
         check(fact_mode in FACT_MODES, loc + '.factual_mode', 'unknown mode')
         refs = strings(unit.get('source_ids'), loc + '.source_ids', fact_mode.startswith('verified_'))
         check(all(r in source_ids for r in refs), loc + '.source_ids', 'unknown source')
-        if part in ('p3', 'p4b'):
-            text(unit.get('title'), loc + '.title')
-            text(unit.get('title_ja'), loc + '.title_ja')
+        for field in ('title', 'title_ja'):
+            if part in ('p3', 'p4b') or field in unit:
+                literal_text(unit.get(field), loc + '.' + field)
         if part == 'p4a':
             mail = obj(unit.get('email'), loc + '.email')
             for field in ('from', 'to', 'date', 'subject', 'greeting', 'closing', 'signature'):
                 pair = obj(mail.get(field), loc + '.email.' + field)
                 for lang in ('en', 'ja'):
-                    text(pair.get(lang), loc + '.email.' + field + '.' + lang)
+                    literal_text(pair.get(lang), loc + '.email.' + field + '.' + lang)
 
         segments = array(unit.get('segments'), loc + '.segments')
         check(bool(segments), loc + '.segments', 'no segments')
@@ -174,7 +185,7 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
             if part == 'p3':
                 check(len(found) == 1, sloc, 'one gap per paragraph required by profile')
             if part == 'p2':
-                speaker = text(segment.get('speaker'), sloc + '.speaker')
+                speaker = literal_text(segment.get('speaker'), sloc + '.speaker')
                 if speaker:
                     speakers.add(speaker)
             texts.append(en)
@@ -221,7 +232,7 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
                 index = cids.index(answer)
                 fills[qid] = ctexts[index]
                 key_rows.append({'question': qid, 'choice_id': answer, 'answer': index + 1})
-            text(q.get('explanation_ja'), qloc + '.explanation_ja')
+            literal_text(q.get('explanation_ja'), qloc + '.explanation_ja')
             evidence = strings(q.get('evidence_segment_ids'), qloc + '.evidence_segment_ids', True)
             check(all(s in local_segments for s in evidence), qloc, 'evidence must refer to this unit')
             notes = array(q.get('distractor_notes'), qloc + '.distractor_notes')
@@ -229,7 +240,7 @@ def validate_pack(data: Any, spec: dict[str, Any] | None = None) -> dict[str, An
             for k, raw_note in enumerate(notes):
                 note = obj(raw_note, f'{qloc}.distractor_notes[{k}]')
                 noted.append(text(note.get('choice_id'), qloc + '.distractor_notes.choice_id'))
-                text(note.get('reason_ja'), qloc + '.distractor_notes.reason_ja')
+                literal_text(note.get('reason_ja'), qloc + '.distractor_notes.reason_ja')
             wanted = [cid for cid in cids if cid != answer]
             check(len(notes) == 3 and len(set(noted)) == 3 and Counter(noted) == Counter(wanted),
                   qloc + '.distractor_notes', 'one reason for each of the three wrong choices required')
@@ -281,6 +292,12 @@ def main() -> int:
         print(json.dumps({'mechanical_ok': False, 'input_error': str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 2
     output = result['derived_answer_key'] if args.answer_key and result['mechanical_ok'] else result
+    if args.answer_key and result['mechanical_ok']:
+        # Keep stdout machine-readable without silently discarding unresolved warnings.
+        print(json.dumps({'warnings': result['warnings'],
+                          'semantic_validation': result['semantic_validation'],
+                          'layout_validation': result['layout_validation']},
+                         ensure_ascii=False), file=sys.stderr)
     print(json.dumps(output, ensure_ascii=False, indent=2))
     return 0 if result['mechanical_ok'] else 1
 
