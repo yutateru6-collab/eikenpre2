@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0",
+  "profile": "pre2-reading-2026-09",
+  "grade": "pre2",
+  "checked_on": "2026-09-11",
+  "official_listing_url": "https://www.eiken.or.jp/eiken/exam/grade_p2/",
+  "official_format_url": "https://www.eiken.or.jp/eiken/exam/grade_p2/solutions.html",
+  "total_questions": 29,
+  "choices_per_question": 4,
+  "parts": [
+    {
+      "id": "p1",
+      "kind": "vocabulary",
+      "question_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "questions_per_unit": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "gap": true
+    },
+    {
+      "id": "p2",
+      "kind": "dialogue",
+      "question_ids": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "questions_per_unit": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "gap": true,
+      "observed_turns": [
+        4,
+        4,
+        4,
+        8
+      ]
+    },
+    {
+      "id": "p3",
+      "kind": "cloze",
+      "question_ids": [
+        21,
+        22
+      ],
+      "questions_per_unit": [
+        2
+      ],
+      "gap": true,
+      "paragraphs_per_unit": 2,
+      "completed_body_word_target": [
+        150,
+        180
+      ]
+    },
+    {
+      "id": "p4a",
+      "kind": "email",
+      "question_ids": [
+        23,
+        24,
+        25
+      ],
+      "questions_per_unit": [
+        3
+      ],
+      "gap": false,
+      "paragraphs_per_unit": 3,
+      "completed_body_word_target": [
+        200,
+        230
+      ]
+    },
+    {
+      "id": "p4b",
+      "kind": "expository",
+      "question_ids": [
+        26,
+        27,
+        28,
+        29
+      ],
+      "questions_per_unit": [
+        4
+      ],
+      "gap": false,
+      "paragraphs_per_unit": 4,
+      "completed_body_word_target": [
+        275,
+        320
+      ]
+    }
+  ],
+  "reading_page_model": [
+    [
+      "p1",
+      1,
+      10
+    ],
+    [
+      "p1",
+      11,
+      15
+    ],
+    [
+      "p2",
+      16,
+      20
+    ],
+    [
+      "p3",
+      21,
+      22
+    ],
+    [
+      "p4a",
+      23,
+      25
+    ],
+    [
+      "p4b",
+      "body"
+    ],
+    [
+      "p4b",
+      26,
+      29
+    ]
+  ],
+  "interpretation": {
+    "question_totals": "officially_published",
+    "unit_pattern_paragraphs_and_pages": "observed_in_three_papers_and_adopted_by_this_profile",
+    "word_targets": "editorial_warning_bands_not_official_limits",
+    "turn_counts": "observed_warning_only",
+    "time_limit": "none_for_reading_only; official 80 minutes covers reading plus writing",
+    "semantic_and_layout_validation": "separate_review_required"
+  }
+}

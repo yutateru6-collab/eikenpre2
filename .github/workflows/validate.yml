@@ -1,0 +1,16 @@
+name: Validate Pre-2 specifications
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run regression tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Check specification and local references
+        run: python3 tools/check_repository.py

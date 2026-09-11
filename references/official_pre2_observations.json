@@ -1,0 +1,230 @@
+{
+  "checked_on": "2026-09-11",
+  "sample_size_exams": 3,
+  "method": "Body only. Titles, instructions, questions, choices, email headers/greeting/closing/signature excluded. Printed count excludes blanks; completed count inserts official keyed choices. Whitespace-delimited tokens containing ASCII letters or digits; contractions and hyphenated words count as one. Curly apostrophes normalized; soft hyphens normalized to hyphens. Counts independently cross-checked with word regex on local transcription; all nine passage totals agreed. Transcription was compared with parsed text and page images. Official passage text is not redistributed.",
+  "limitations": "Three papers only; no official word limit, lexical inventory, difficulty estimate, font-size measurement, or pupil trial inferred. Reading page images and answer tables were reviewed.",
+  "exams": [
+    {
+      "exam": "2026-1",
+      "parts": {
+        "p3": {
+          "paragraph_count": 2,
+          "printed_body_words": 151,
+          "completed_body_words": 161,
+          "printed_paragraph_words": [
+            74,
+            77
+          ]
+        },
+        "p4a": {
+          "paragraph_count": 3,
+          "printed_body_words": 218,
+          "completed_body_words": 218,
+          "printed_paragraph_words": [
+            73,
+            74,
+            71
+          ]
+        },
+        "p4b": {
+          "paragraph_count": 4,
+          "printed_body_words": 304,
+          "completed_body_words": 304,
+          "printed_paragraph_words": [
+            75,
+            79,
+            73,
+            77
+          ]
+        }
+      },
+      "answer_position_counts": {
+        "1": 8,
+        "2": 6,
+        "3": 8,
+        "4": 7
+      },
+      "maximum_identical_answer_run": 2,
+      "question_pdf": "https://www.eiken.or.jp/eiken/exam/kakomon/2026-1-1ji-p2kyu.pdf",
+      "answer_pdf": "https://www.eiken.or.jp/eiken/result/pdf/202601Fp2kyu.pdf",
+      "reading_pdf_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "images_reviewed_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dialogue_questions_per_unit": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "dialogue_turns_per_unit": [
+        4,
+        4,
+        4,
+        8
+      ]
+    },
+    {
+      "exam": "2025-3",
+      "parts": {
+        "p3": {
+          "paragraph_count": 2,
+          "printed_body_words": 151,
+          "completed_body_words": 162,
+          "printed_paragraph_words": [
+            75,
+            76
+          ]
+        },
+        "p4a": {
+          "paragraph_count": 3,
+          "printed_body_words": 211,
+          "completed_body_words": 211,
+          "printed_paragraph_words": [
+            70,
+            72,
+            69
+          ]
+        },
+        "p4b": {
+          "paragraph_count": 4,
+          "printed_body_words": 299,
+          "completed_body_words": 299,
+          "printed_paragraph_words": [
+            77,
+            78,
+            67,
+            77
+          ]
+        }
+      },
+      "answer_position_counts": {
+        "1": 8,
+        "2": 4,
+        "3": 9,
+        "4": 8
+      },
+      "maximum_identical_answer_run": 2,
+      "question_pdf": "https://www.eiken.or.jp/eiken/exam/kakomon/2025-3-1ji-p2kyu.pdf",
+      "answer_pdf": "https://www.eiken.or.jp/eiken/result/pdf/202503Fp2kyu.pdf",
+      "reading_pdf_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "images_reviewed_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dialogue_questions_per_unit": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "dialogue_turns_per_unit": [
+        4,
+        4,
+        4,
+        8
+      ]
+    },
+    {
+      "exam": "2025-2",
+      "parts": {
+        "p3": {
+          "paragraph_count": 2,
+          "printed_body_words": 152,
+          "completed_body_words": 161,
+          "printed_paragraph_words": [
+            77,
+            75
+          ]
+        },
+        "p4a": {
+          "paragraph_count": 3,
+          "printed_body_words": 203,
+          "completed_body_words": 203,
+          "printed_paragraph_words": [
+            66,
+            66,
+            71
+          ]
+        },
+        "p4b": {
+          "paragraph_count": 4,
+          "printed_body_words": 280,
+          "completed_body_words": 280,
+          "printed_paragraph_words": [
+            65,
+            73,
+            70,
+            72
+          ]
+        }
+      },
+      "answer_position_counts": {
+        "1": 5,
+        "2": 9,
+        "3": 9,
+        "4": 6
+      },
+      "maximum_identical_answer_run": 2,
+      "question_pdf": "https://www.eiken.or.jp/eiken/exam/kakomon/2025-2-1ji-p2kyu.pdf",
+      "answer_pdf": "https://www.eiken.or.jp/eiken/result/pdf/202502Fp2kyu.pdf",
+      "reading_pdf_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "images_reviewed_pages_1_based": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dialogue_questions_per_unit": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "dialogue_turns_per_unit": [
+        4,
+        4,
+        4,
+        8
+      ]
+    }
+  ]
+}
