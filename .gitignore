@@ -11,3 +11,7 @@ official-downloads/
 *.ttf
 *.otf
 *.ttc
+work/
+private/
+outputs/
+.DS_Store
