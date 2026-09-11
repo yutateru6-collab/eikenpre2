@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.work/
+output/
+official-downloads/
+.env
+.env.*
+*.pdf
+*.docx
+*.ttf
+*.otf
+*.ttc
